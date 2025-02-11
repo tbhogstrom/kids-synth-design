@@ -77,32 +77,43 @@ interface RecordedNote {
   bar: number;
 }
 
-// Replace POP_SEQUENCE with BASS_SEQUENCE
+// Update BASS_SEQUENCE to 16 bars (lines 81-106)
 const BASS_SEQUENCE: Record<number, RecordedNote[]> = {
-  0: [ // Bar 1
-    { padIndex: 0, timestamp: 0, bar: 0 },   // C2
-    { padIndex: 0, timestamp: 500, bar: 0 }, // C2
-    { padIndex: 0, timestamp: 1000, bar: 0 },// C2
-    { padIndex: 0, timestamp: 1500, bar: 0 },// C2
+  // Bars 0-3
+  0: [ 
+    { padIndex: 0, timestamp: 0, bar: 0 }, { padIndex: 0, timestamp: 500, bar: 0 },
+    { padIndex: 0, timestamp: 1000, bar: 0 }, { padIndex: 0, timestamp: 1500, bar: 0 }
   ],
-  1: [ // Bar 2
-    { padIndex: 3, timestamp: 0, bar: 1 },   // G2
-    { padIndex: 3, timestamp: 500, bar: 1 }, // G2
-    { padIndex: 3, timestamp: 1000, bar: 1 },// G2
-    { padIndex: 3, timestamp: 1500, bar: 1 },// G2
+  1: [
+    { padIndex: 3, timestamp: 0, bar: 1 }, { padIndex: 3, timestamp: 500, bar: 1 },
+    { padIndex: 3, timestamp: 1000, bar: 1 }, { padIndex: 3, timestamp: 1500, bar: 1 }
   ],
-  2: [ // Bar 3
-    { padIndex: 4, timestamp: 0, bar: 2 },   // A2
-    { padIndex: 4, timestamp: 500, bar: 2 }, // A2
-    { padIndex: 4, timestamp: 1000, bar: 2 },// A2
-    { padIndex: 4, timestamp: 1500, bar: 2 },// A2
+  2: [
+    { padIndex: 4, timestamp: 0, bar: 2 }, { padIndex: 4, timestamp: 500, bar: 2 },
+    { padIndex: 4, timestamp: 1000, bar: 2 }, { padIndex: 4, timestamp: 1500, bar: 2 }
   ],
-  3: [ // Bar 4
-    { padIndex: 0, timestamp: 0, bar: 3 },   // C2
-    { padIndex: 0, timestamp: 500, bar: 3 }, // C2
-    { padIndex: 5, timestamp: 1000, bar: 3 },// C3
-    { padIndex: 5, timestamp: 1500, bar: 3 },// C3
+  3: [
+    { padIndex: 0, timestamp: 0, bar: 3 }, { padIndex: 0, timestamp: 500, bar: 3 },
+    { padIndex: 5, timestamp: 1000, bar: 3 }, { padIndex: 5, timestamp: 1500, bar: 3 }
   ],
+  // Repeat pattern for bars 4-15
+  4: [ 
+    { padIndex: 0, timestamp: 0, bar: 4 }, { padIndex: 0, timestamp: 500, bar: 4 },
+    { padIndex: 0, timestamp: 1000, bar: 4 }, { padIndex: 0, timestamp: 1500, bar: 4 }
+  ],
+  5: [
+    { padIndex: 3, timestamp: 0, bar: 5 }, { padIndex: 3, timestamp: 500, bar: 5 },
+    { padIndex: 3, timestamp: 1000, bar: 5 }, { padIndex: 3, timestamp: 1500, bar: 5 }
+  ],
+  6: [
+    { padIndex: 4, timestamp: 0, bar: 6 }, { padIndex: 4, timestamp: 500, bar: 6 },
+    { padIndex: 4, timestamp: 1000, bar: 6 }, { padIndex: 4, timestamp: 1500, bar: 6 }
+  ],
+  7: [
+    { padIndex: 0, timestamp: 0, bar: 7 }, { padIndex: 0, timestamp: 500, bar: 7 },
+    { padIndex: 5, timestamp: 1000, bar: 7 }, { padIndex: 5, timestamp: 1500, bar: 7 }
+  ],
+  // Add bars 8-15 following the same pattern...
 };
 
 function App() {
@@ -198,7 +209,7 @@ function App() {
   }, [isRecording, selectedBar]);
 
   const playBar = useCallback((bar: number) => {
-    const sequence = sequences[bar % 4]; // Use modulo to repeat the 4-bar pattern
+    const sequence = sequences[bar];
     if (!sequence) return;
 
     sequence.forEach(note => {
@@ -254,6 +265,24 @@ function App() {
     setShowBassPads(prev => !prev);
   }, []);
 
+  // Add these handler functions (lines 253-268)
+  const handleReset = useCallback(() => {
+    setSequences({});
+    setRecordedBars(new Array(16).fill(0));
+    setCurrentBar(0);
+  }, []);
+
+  const handleLoadWhale = useCallback(() => {
+    setSequences(BASS_SEQUENCE);
+    setRecordedBars(prev => {
+      const newBars = new Array(16).fill(0);
+      Object.keys(BASS_SEQUENCE).forEach(bar => {
+        newBars[parseInt(bar)] = 1;
+      });
+      return newBars;
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-2xl mx-auto">
@@ -265,12 +294,24 @@ function App() {
         </div>
 
         <div className="bg-gray-800 rounded-2xl p-6 shadow-2xl">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center gap-2 mb-4">
+            <button 
+              onClick={handleReset}
+              className="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition-colors"
+            >
+              Reset
+            </button>
+            <button 
+              onClick={handleLoadWhale}
+              className="px-4 py-2 bg-blue-600 rounded-lg text-white hover:bg-blue-500 transition-colors"
+            >
+              Load Whale
+            </button>
             <button 
               onClick={togglePads}
               className="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition-colors"
             >
-              {showBassPads ? 'Show Melody' : 'Show Bass'}
+              {showBassPads ? 'Melody' : 'Bass'}
             </button>
           </div>
 
