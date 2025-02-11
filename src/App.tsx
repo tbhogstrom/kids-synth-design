@@ -31,45 +31,56 @@ const PADS = [
   { note: 'Clap', frequency: 300, color: 'bg-fuchsia-500', isDrum: true },
 ];
 
+// Add new bass pads at the beginning
+const BASS_PADS = [
+  // Bass notes (lower octave)
+  { note: 'C2', frequency: 65.41, color: 'bg-cyan-600' },
+  { note: 'D2', frequency: 73.42, color: 'bg-teal-600' },
+  { note: 'E2', frequency: 82.41, color: 'bg-green-600' },
+  { note: 'G2', frequency: 98.00, color: 'bg-emerald-600' },
+  { note: 'A2', frequency: 110.00, color: 'bg-lime-600' },
+  { note: 'C3', frequency: 130.81, color: 'bg-cyan-700' },
+  
+  // Add some simple drum pads
+  { note: 'Kick', frequency: 100, color: 'bg-red-600', isDrum: true },
+  { note: 'Snare', frequency: 200, color: 'bg-rose-600', isDrum: true },
+];
+
+const MELODY_PADS = [
+  // ... existing PADS array contents ...
+];
+
 interface RecordedNote {
   padIndex: number;
   timestamp: number;
   bar: number;
 }
 
-// Pre-made pop song sequence (2-5-1 progression with basic beat)
-const POP_SEQUENCE: Record<number, RecordedNote[]> = {
-  // Bar 1: Dm (ii) with basic beat
-  0: [
-    { padIndex: 1, timestamp: 0, bar: 0 }, // F chord
-    { padIndex: 12, timestamp: 0, bar: 0 }, // Kick
-    { padIndex: 13, timestamp: 500, bar: 0 }, // Snare
-    { padIndex: 14, timestamp: 250, bar: 0 }, // Hat
-    { padIndex: 14, timestamp: 750, bar: 0 }, // Hat
+// Replace POP_SEQUENCE with BASS_SEQUENCE
+const BASS_SEQUENCE: Record<number, RecordedNote[]> = {
+  0: [ // Bar 1
+    { padIndex: 0, timestamp: 0, bar: 0 },   // C2
+    { padIndex: 0, timestamp: 500, bar: 0 }, // C2
+    { padIndex: 0, timestamp: 1000, bar: 0 },// C2
+    { padIndex: 0, timestamp: 1500, bar: 0 },// C2
   ],
-  // Bar 2: G7 (V7)
-  1: [
-    { padIndex: 2, timestamp: 0, bar: 1 }, // G chord
-    { padIndex: 12, timestamp: 0, bar: 1 }, // Kick
-    { padIndex: 13, timestamp: 500, bar: 1 }, // Snare
-    { padIndex: 14, timestamp: 250, bar: 1 }, // Hat
-    { padIndex: 14, timestamp: 750, bar: 1 }, // Hat
+  1: [ // Bar 2
+    { padIndex: 3, timestamp: 0, bar: 1 },   // G2
+    { padIndex: 3, timestamp: 500, bar: 1 }, // G2
+    { padIndex: 3, timestamp: 1000, bar: 1 },// G2
+    { padIndex: 3, timestamp: 1500, bar: 1 },// G2
   ],
-  // Bar 3: C (I)
-  2: [
-    { padIndex: 0, timestamp: 0, bar: 2 }, // C chord
-    { padIndex: 12, timestamp: 0, bar: 2 }, // Kick
-    { padIndex: 13, timestamp: 500, bar: 2 }, // Snare
-    { padIndex: 14, timestamp: 250, bar: 2 }, // Hat
-    { padIndex: 14, timestamp: 750, bar: 2 }, // Hat
+  2: [ // Bar 3
+    { padIndex: 4, timestamp: 0, bar: 2 },   // A2
+    { padIndex: 4, timestamp: 500, bar: 2 }, // A2
+    { padIndex: 4, timestamp: 1000, bar: 2 },// A2
+    { padIndex: 4, timestamp: 1500, bar: 2 },// A2
   ],
-  // Bar 4: C (I) with fill
-  3: [
-    { padIndex: 0, timestamp: 0, bar: 3 }, // C chord
-    { padIndex: 12, timestamp: 0, bar: 3 }, // Kick
-    { padIndex: 13, timestamp: 250, bar: 3 }, // Snare
-    { padIndex: 13, timestamp: 500, bar: 3 }, // Snare
-    { padIndex: 13, timestamp: 750, bar: 3 }, // Snare
+  3: [ // Bar 4
+    { padIndex: 0, timestamp: 0, bar: 3 },   // C2
+    { padIndex: 0, timestamp: 500, bar: 3 }, // C2
+    { padIndex: 5, timestamp: 1000, bar: 3 },// C3
+    { padIndex: 5, timestamp: 1500, bar: 3 },// C3
   ],
 };
 
@@ -81,15 +92,16 @@ function App() {
   const [bpm, setBpm] = useState(100); // Slower tempo for easier listening
   const [currentBar, setCurrentBar] = useState(0);
   const [recordedBars, setRecordedBars] = useState<number[]>(new Array(16).fill(0));
-  const [sequences, setSequences] = useState<Record<number, RecordedNote[]>>(POP_SEQUENCE);
+  const [sequences, setSequences] = useState<Record<number, RecordedNote[]>>(BASS_SEQUENCE);
   const [metronomeInterval, setMetronomeInterval] = useState<number | null>(null);
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
+  const [showBassPads, setShowBassPads] = useState(true);
 
   // Initialize recordedBars with our pre-made sequence
   useEffect(() => {
     setRecordedBars(prev => {
       const newBars = [...prev];
-      Object.keys(POP_SEQUENCE).forEach(bar => {
+      Object.keys(BASS_SEQUENCE).forEach(bar => {
         newBars[parseInt(bar)] = 1;
       });
       return newBars;
@@ -217,6 +229,10 @@ function App() {
     }
   }, [isPlaying, isRecording]);
 
+  const togglePads = useCallback(() => {
+    setShowBassPads(prev => !prev);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 p-4">
       <div className="max-w-2xl mx-auto">
@@ -228,6 +244,15 @@ function App() {
         </div>
 
         <div className="bg-gray-800 rounded-2xl p-6 shadow-2xl">
+          <div className="flex justify-center mb-4">
+            <button 
+              onClick={togglePads}
+              className="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition-colors"
+            >
+              {showBassPads ? 'Show Melody' : 'Show Bass'}
+            </button>
+          </div>
+
           <div className="text-center mb-4">
             <p className="text-white text-sm">
               {isRecording ? 
@@ -259,7 +284,7 @@ function App() {
           />
 
           <div className="grid grid-cols-4 gap-4 mb-6">
-            {PADS.map((pad, index) => (
+            {(showBassPads ? BASS_PADS : MELODY_PADS).map((pad, index) => (
               <Pad
                 key={index}
                 note={pad.note}
