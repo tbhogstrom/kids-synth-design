@@ -77,43 +77,144 @@ interface RecordedNote {
   bar: number;
 }
 
-// Update BASS_SEQUENCE to 16 bars (lines 81-106)
-const BASS_SEQUENCE: Record<number, RecordedNote[]> = {
-  // Bars 0-3
-  0: [ 
-    { padIndex: 0, timestamp: 0, bar: 0 }, { padIndex: 0, timestamp: 500, bar: 0 },
-    { padIndex: 0, timestamp: 1000, bar: 0 }, { padIndex: 0, timestamp: 1500, bar: 0 }
+// Ocean Friends sequence - a playful melody about sea creatures
+const MELODY_SEQUENCE: Record<number, RecordedNote[]> = {
+  // Verse 1: "Swimming in the sea" theme
+  0: [
+    { padIndex: 4, timestamp: 0, bar: 0 },    // C4
+    { padIndex: 4, timestamp: 1000, bar: 0 }, // C4
   ],
   1: [
-    { padIndex: 3, timestamp: 0, bar: 1 }, { padIndex: 3, timestamp: 500, bar: 1 },
-    { padIndex: 3, timestamp: 1000, bar: 1 }, { padIndex: 3, timestamp: 1500, bar: 1 }
+    { padIndex: 6, timestamp: 0, bar: 1 },    // E4
+    { padIndex: 7, timestamp: 1000, bar: 1 }, // G4
   ],
   2: [
-    { padIndex: 4, timestamp: 0, bar: 2 }, { padIndex: 4, timestamp: 500, bar: 2 },
-    { padIndex: 4, timestamp: 1000, bar: 2 }, { padIndex: 4, timestamp: 1500, bar: 2 }
+    { padIndex: 7, timestamp: 0, bar: 2 },    // G4
+    { padIndex: 6, timestamp: 1000, bar: 2 }, // E4
   ],
   3: [
-    { padIndex: 0, timestamp: 0, bar: 3 }, { padIndex: 0, timestamp: 500, bar: 3 },
-    { padIndex: 5, timestamp: 1000, bar: 3 }, { padIndex: 5, timestamp: 1500, bar: 3 }
+    { padIndex: 4, timestamp: 0, bar: 3 },    // C4
+    { padIndex: 4, timestamp: 1500, bar: 3 }, // C4
   ],
-  // Repeat pattern for bars 4-15
-  4: [ 
-    { padIndex: 0, timestamp: 0, bar: 4 }, { padIndex: 0, timestamp: 500, bar: 4 },
-    { padIndex: 0, timestamp: 1000, bar: 4 }, { padIndex: 0, timestamp: 1500, bar: 4 }
+  // Verse 2: "Playing with friends" theme
+  4: [
+    { padIndex: 7, timestamp: 0, bar: 4 },    // G4
+    { padIndex: 7, timestamp: 1000, bar: 4 }, // G4
   ],
   5: [
-    { padIndex: 3, timestamp: 0, bar: 5 }, { padIndex: 3, timestamp: 500, bar: 5 },
-    { padIndex: 3, timestamp: 1000, bar: 5 }, { padIndex: 3, timestamp: 1500, bar: 5 }
+    { padIndex: 8, timestamp: 0, bar: 5 },    // A4
+    { padIndex: 7, timestamp: 1000, bar: 5 }, // G4
   ],
   6: [
-    { padIndex: 4, timestamp: 0, bar: 6 }, { padIndex: 4, timestamp: 500, bar: 6 },
-    { padIndex: 4, timestamp: 1000, bar: 6 }, { padIndex: 4, timestamp: 1500, bar: 6 }
+    { padIndex: 6, timestamp: 0, bar: 6 },    // E4
+    { padIndex: 6, timestamp: 1000, bar: 6 }, // E4
   ],
   7: [
-    { padIndex: 0, timestamp: 0, bar: 7 }, { padIndex: 0, timestamp: 500, bar: 7 },
-    { padIndex: 5, timestamp: 1000, bar: 7 }, { padIndex: 5, timestamp: 1500, bar: 7 }
+    { padIndex: 4, timestamp: 0, bar: 7 },    // C4
   ],
-  // Add bars 8-15 following the same pattern...
+  // Bridge: "Jumping waves" theme
+  8: [
+    { padIndex: 6, timestamp: 0, bar: 8 },    // E4
+    { padIndex: 7, timestamp: 500, bar: 8 },  // G4
+    { padIndex: 8, timestamp: 1000, bar: 8 }, // A4
+  ],
+  9: [
+    { padIndex: 7, timestamp: 0, bar: 9 },    // G4
+    { padIndex: 6, timestamp: 1000, bar: 9 }, // E4
+  ],
+  10: [
+    { padIndex: 6, timestamp: 0, bar: 10 },   // E4
+    { padIndex: 4, timestamp: 1000, bar: 10 }, // C4
+  ],
+  11: [
+    { padIndex: 4, timestamp: 0, bar: 11 },   // C4
+  ],
+  // Ending: "Happy ending" theme
+  12: [
+    { padIndex: 4, timestamp: 0, bar: 12 },   // C4
+    { padIndex: 6, timestamp: 500, bar: 12 }, // E4
+  ],
+  13: [
+    { padIndex: 7, timestamp: 0, bar: 13 },   // G4
+    { padIndex: 8, timestamp: 500, bar: 13 }, // A4
+  ],
+  14: [
+    { padIndex: 7, timestamp: 0, bar: 14 },   // G4
+    { padIndex: 6, timestamp: 500, bar: 14 }, // E4
+  ],
+  15: [
+    { padIndex: 4, timestamp: 0, bar: 15 },   // C4
+  ],
+};
+
+const BASS_SEQUENCE: Record<number, RecordedNote[]> = {
+  // Verse 1: Simple I-V pattern
+  0: [ 
+    { padIndex: 0, timestamp: 0, bar: 0 },    // C2
+    { padIndex: 0, timestamp: 1000, bar: 0 }, // C2
+  ],
+  1: [
+    { padIndex: 3, timestamp: 0, bar: 1 },    // G2
+    { padIndex: 3, timestamp: 1000, bar: 1 }, // G2
+  ],
+  2: [
+    { padIndex: 0, timestamp: 0, bar: 2 },    // C2
+    { padIndex: 0, timestamp: 1000, bar: 2 }, // C2
+  ],
+  3: [
+    { padIndex: 3, timestamp: 0, bar: 3 },    // G2
+    { padIndex: 3, timestamp: 1000, bar: 3 }, // G2
+  ],
+  // Verse 2: I-IV-V pattern
+  4: [
+    { padIndex: 0, timestamp: 0, bar: 4 },    // C2
+    { padIndex: 0, timestamp: 1000, bar: 4 }, // C2
+  ],
+  5: [
+    { padIndex: 2, timestamp: 0, bar: 5 },    // F2
+    { padIndex: 2, timestamp: 1000, bar: 5 }, // F2
+  ],
+  6: [
+    { padIndex: 3, timestamp: 0, bar: 6 },    // G2
+    { padIndex: 3, timestamp: 1000, bar: 6 }, // G2
+  ],
+  7: [
+    { padIndex: 0, timestamp: 0, bar: 7 },    // C2
+  ],
+  // Bridge: Walking bass line
+  8: [
+    { padIndex: 0, timestamp: 0, bar: 8 },    // C2
+    { padIndex: 1, timestamp: 500, bar: 8 },  // D2
+    { padIndex: 2, timestamp: 1000, bar: 8 }, // E2
+    { padIndex: 3, timestamp: 1500, bar: 8 }, // G2
+  ],
+  9: [
+    { padIndex: 3, timestamp: 0, bar: 9 },    // G2
+    { padIndex: 3, timestamp: 1000, bar: 9 }, // G2
+  ],
+  10: [
+    { padIndex: 2, timestamp: 0, bar: 10 },   // F2
+    { padIndex: 2, timestamp: 1000, bar: 10 }, // F2
+  ],
+  11: [
+    { padIndex: 0, timestamp: 0, bar: 11 },   // C2
+  ],
+  // Ending: Resolving pattern
+  12: [
+    { padIndex: 0, timestamp: 0, bar: 12 },   // C2
+    { padIndex: 3, timestamp: 1000, bar: 12 }, // G2
+  ],
+  13: [
+    { padIndex: 2, timestamp: 0, bar: 13 },   // F2
+    { padIndex: 3, timestamp: 1000, bar: 13 }, // G2
+  ],
+  14: [
+    { padIndex: 0, timestamp: 0, bar: 14 },   // C2
+    { padIndex: 3, timestamp: 1000, bar: 14 }, // G2
+  ],
+  15: [
+    { padIndex: 0, timestamp: 0, bar: 15 },   // C2
+  ],
 };
 
 function App() {
@@ -295,16 +396,20 @@ function App() {
     setCurrentBar(0);
   }, []);
 
-  const handleLoadWhale = useCallback(() => {
-    setSequences(BASS_SEQUENCE);
+  const handleLoadOceanFriends = useCallback(() => {
+    if (showBassPads) {
+      setSequences(BASS_SEQUENCE);
+    } else {
+      setSequences(MELODY_SEQUENCE);
+    }
     setRecordedBars(prev => {
       const newBars = new Array(16).fill(0);
-      Object.keys(BASS_SEQUENCE).forEach(bar => {
+      Object.keys(showBassPads ? BASS_SEQUENCE : MELODY_SEQUENCE).forEach(bar => {
         newBars[parseInt(bar)] = 1;
       });
       return newBars;
     });
-  }, []);
+  }, [showBassPads]);
 
   return (
     <div className="min-h-screen bg-gray-900 p-4">
@@ -325,16 +430,16 @@ function App() {
               Reset
             </button>
             <button 
-              onClick={handleLoadWhale}
+              onClick={handleLoadOceanFriends}
               className="px-4 py-2 bg-blue-600 rounded-lg text-white hover:bg-blue-500 transition-colors"
             >
-              Load Whale
+              Load Ocean Friends
             </button>
             <button 
               onClick={togglePads}
               className="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition-colors"
             >
-              {showBassPads ? 'Melody' : 'Bass'}
+              {showBassPads ? 'Show Melody' : 'Show Bass'}
             </button>
           </div>
 
