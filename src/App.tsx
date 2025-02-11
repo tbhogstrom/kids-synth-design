@@ -34,12 +34,12 @@ const PADS = [
 // Add new bass pads at the beginning
 const BASS_PADS = [
   // Bass notes (lower octave)
-  { note: 'C2', frequency: 65.41, color: 'bg-cyan-600' },
-  { note: 'D2', frequency: 73.42, color: 'bg-teal-600' },
-  { note: 'E2', frequency: 82.41, color: 'bg-green-600' },
-  { note: 'G2', frequency: 98.00, color: 'bg-emerald-600' },
-  { note: 'A2', frequency: 110.00, color: 'bg-lime-600' },
-  { note: 'C3', frequency: 130.81, color: 'bg-cyan-700' },
+  { note: 'C3', frequency: 65.41, color: 'bg-cyan-600' },
+  { note: 'D3', frequency: 73.42, color: 'bg-teal-600' },
+  { note: 'E3', frequency: 82.41, color: 'bg-green-600' },
+  { note: 'G3', frequency: 98.00, color: 'bg-emerald-600' },
+  { note: 'A3', frequency: 110.00, color: 'bg-lime-600' },
+  { note: 'C2', frequency: 130.81, color: 'bg-cyan-700' },
   
   // Add some simple drum pads
   { note: 'Kick', frequency: 100, color: 'bg-red-600', isDrum: true },
