@@ -128,6 +128,7 @@ function App() {
   const [metronomeInterval, setMetronomeInterval] = useState<number | null>(null);
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
   const [showBassPads, setShowBassPads] = useState(true);
+  const [isCountingIn, setIsCountingIn] = useState(false);
 
   // Initialize recordedBars with our pre-made sequence
   useEffect(() => {
@@ -250,16 +251,38 @@ function App() {
   const handleTransportAction = useCallback((action: 'play' | 'record' | 'loop') => {
     switch (action) {
       case 'play':
-        setIsPlaying(!isPlaying);
+        setIsPlaying(prev => !prev);
         break;
       case 'record':
-        setIsRecording(!isRecording);
+        if (!isRecording && !isPlaying) {
+          // Start count-in when recording is initiated
+          setIsCountingIn(true);
+          let count = 0;
+          const countInInterval = setInterval(() => {
+            if (count < 3) {
+              const { osc, gain } = createMetronomeClick(false);
+              osc.start();
+              setTimeout(() => {
+                osc.stop();
+                gain.disconnect();
+              }, 100);
+              count++;
+            } else {
+              clearInterval(countInInterval);
+              setIsCountingIn(false);
+              setIsRecording(true);
+              setIsPlaying(true);
+            }
+          }, (60000 / bpm));
+        } else {
+          setIsRecording(false);
+        }
         break;
       case 'loop':
-        setIsLooping(!isLooping);
+        setIsLooping(prev => !prev);
         break;
     }
-  }, [isPlaying, isRecording]);
+  }, [isPlaying, isRecording, bpm]);
 
   const togglePads = useCallback(() => {
     setShowBassPads(prev => !prev);
@@ -317,11 +340,13 @@ function App() {
 
           <div className="text-center mb-4">
             <p className="text-white text-sm">
-              {isRecording ? 
-                selectedBar !== null ? 
-                  `Recording bar ${selectedBar + 1}...` : 
-                  'Click a bar to record' : 
-                'Press Play to hear the pop song pattern!'}
+              {isCountingIn ? 
+                'Get ready...' : 
+                isRecording ? 
+                  selectedBar !== null ? 
+                    `Recording bar ${selectedBar + 1}...` : 
+                    'Click a bar to record' : 
+                  'Press Play to hear the sequence!'}
             </p>
           </div>
 
