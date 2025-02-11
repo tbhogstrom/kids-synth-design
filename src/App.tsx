@@ -46,8 +46,29 @@ const BASS_PADS = [
   { note: 'Snare', frequency: 200, color: 'bg-rose-600', isDrum: true },
 ];
 
+// Keep the original PADS array as MELODY_PADS
 const MELODY_PADS = [
-  // ... existing PADS array contents ...
+  // Chord pads (top row)
+  { note: 'C', frequency: 261.63, color: 'bg-blue-500' },
+  { note: 'F', frequency: 349.23, color: 'bg-indigo-500' },
+  { note: 'G', frequency: 392.00, color: 'bg-violet-500' },
+  { note: 'Am', frequency: 440.00, color: 'bg-purple-500' },
+
+  // Middle notes (rows 2-3)
+  { note: 'C4', frequency: 261.63, color: 'bg-cyan-500' },
+  { note: 'D4', frequency: 293.66, color: 'bg-teal-500' },
+  { note: 'E4', frequency: 329.63, color: 'bg-green-500' },
+  { note: 'G4', frequency: 392.00, color: 'bg-emerald-500' },
+  { note: 'A4', frequency: 440.00, color: 'bg-lime-500' },
+  { note: 'C5', frequency: 523.25, color: 'bg-yellow-500' },
+  { note: 'D5', frequency: 587.33, color: 'bg-amber-500' },
+  { note: 'E5', frequency: 659.25, color: 'bg-orange-500' },
+
+  // Drum pads (bottom row)
+  { note: 'Kick', frequency: 100, color: 'bg-red-500', isDrum: true },
+  { note: 'Snare', frequency: 200, color: 'bg-rose-500', isDrum: true },
+  { note: 'Hat', frequency: 300, color: 'bg-pink-500', isDrum: true },
+  { note: 'Clap', frequency: 400, color: 'bg-fuchsia-500', isDrum: true },
 ];
 
 interface RecordedNote {
