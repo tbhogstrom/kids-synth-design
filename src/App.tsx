@@ -333,6 +333,7 @@ function App() {
       }
     });
   }, [sequences]);
+  
 
   useEffect(() => {
     if (isPlaying) {
